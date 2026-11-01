@@ -2,6 +2,7 @@
   hosts: local
   connection: local
   vars:
+    # ansible-playbook roboshop.yaml -e "instances=['mongodb']"
     instances: ['mongodb', 'redis', 'mysql', 'rabbitmq']
     domain: kpraws.shop
     action_name: create
