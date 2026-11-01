@@ -1,0 +1,12 @@
+- name: install mongodb
+  hosts: mongodb
+  become: yes
+  tasks:
+  - name: install mongodb
+    copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: test inventory variable
+    debug:
+      msg: "{{app_name}}"
