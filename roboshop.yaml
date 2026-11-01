@@ -18,4 +18,9 @@
       region: us-east-1
     loop: "{{ instances }}"
     when: action_name == "create"
+    register: ec2_output
+    
+  - name: print ec2 output
+    debug:
+      msg: "{{ec2_output}}"
     
