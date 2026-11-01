@@ -2,11 +2,22 @@
   hosts: mongodb
   become: yes
   tasks:
-  - name: install mongodb
+  - name: copy repo
     copy:
       src: mongo.repo
       dest: /etc/yum.repos.d/mongo.repo
 
-  - name: test inventory variable
-    debug:
-      msg: "{{app_name}}"
+  # - name: test inventory variable
+  #   debug:
+  #     msg: "{{app_name}}"
+
+  - name: install mongodb
+    package:
+      name: mongodb-org
+      state: present
+
+  - name: enable and start
+    service:
+      name: mongodb
+      state: started
+      enabled: yes
