@@ -1,0 +1,42 @@
+- name: install redis
+  hosts: redis
+  become: yes
+  tasks:
+  - name: enable redis
+    command: dnf module enable redis:7 -y
+
+  # - name: test inventory variable
+  #   debug:
+  #     msg: "{{app_name}}"
+
+  - name: install redis
+    package:
+      name: redis
+      state: present
+
+  - name: allow remote connections
+    replace:
+      path: /etc/redis/redis.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+
+  - name: allow remote connections
+    ansible.builtin.lineinfile:
+      path: /etc/redis/redis.conf
+      regexp: '^#?protected-mode yes'
+      line: 'protected-mode no'
+      state: present
+
+  - name: enable and start
+    service:
+      name: redis
+      state: started
+      enabled: yes
+
+
+
+  # - name: restart
+  #   service:
+  #     name: mongod
+  #     state: restarted
+      
