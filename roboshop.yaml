@@ -9,12 +9,13 @@
   tasks:
   - name: create instances
     amazon.aws.ec2_instance:
-      name: roboshop-{{ item }}
+      name: "roboshop-{{ item }}"
       image_id: "{{ ami_id }}"
       instance_type: t3.micro
       security_groups:
       - myip
-      - roboshop-{{ item }}
+      - "roboshop-{{ item }}"
       region: us-east-1
     loop: "{{ instances }}"
-    when: action_name == "ceate"
+    when: action_name == "create"
+    
