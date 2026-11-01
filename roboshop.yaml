@@ -1,0 +1,20 @@
+- name: create instances and route 53 records
+  hosts: local
+  connection: local
+  vars:
+    instances: ['mongodb', 'redis', 'mysql', 'rabbitmq']
+    domain: kpraws.shop
+    action_name: create
+    ami_id: ami-0055977a6e828a4f4
+  tasks:
+  - name: create instances
+    amazon.aws.ec2_instance:
+      name: roboshop-{{ item }}
+      image_id: "{{ ami_id }}"
+      instance_type: t3.micro
+      security_groups:
+      - myip
+      - roboshop-{{ item }}
+      region: us-east-1
+    loop: "{{ instances }}"
+    when: action_name == "ceate"
